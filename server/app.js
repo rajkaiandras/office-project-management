@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
@@ -26,7 +27,12 @@ process.env.STATUS === 'production'
   : (PORT = process.env.DEV_PORT);
 
 // generic middlewares
+// app.use(express.json());
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+
+// static folder
+app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 
 // handling CORS error (set headers for every response to allow CORS)
 app.use((req, res, next) => {

@@ -48,7 +48,19 @@ const gettingUserByIdController = async (req, res, next) => {
   }
 };
 
+const uploadingUserImageController = async (req, res, next) => {
+  console.log('GET request in /api/users/image - upload user image route!');
+
+  try {
+    res.json({ message: `You saved an image!` });
+  } catch (err) {
+    const error = new HttpError('Could not save provided image!', 404);
+    return next(error);
+  }
+};
+
 module.exports = {
   gettingUsersController,
   gettingUserByIdController,
+  uploadingUserImageController,
 };
