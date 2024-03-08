@@ -79,6 +79,7 @@ const loginController = async (req, res, next) => {
         _id: user[0]._id,
         firstName: user[0].firstName,
         lastName: user[0].lastName,
+        image: user[0].image,
       },
     });
   } catch (err) {

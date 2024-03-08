@@ -10,7 +10,7 @@ const usersControllers = require('../controllers/users-controllers.js');
 router.get('/', usersControllers.gettingUsersController);
 router.get('/:uid', usersControllers.gettingUserByIdController);
 router.post(
-  '/image',
+  '/upload/image',
   fileUpload.single('image'),
   usersControllers.uploadingUserImageController
 );

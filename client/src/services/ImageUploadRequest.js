@@ -1,37 +1,34 @@
-import { useHttpClient } from '../hooks/useHttpClient';
+import { useState } from 'react';
 
 export const ImageUploadRequest = () => {
-  const {
-    sendRequest,
-    isPending: isImageUploadPending,
-    isSuccess: isImageUploadSuccess,
-    error: imageUploadError,
-  } = useHttpClient();
+  const [result, setResult] = useState();
 
-  const uploadImage = async (image) => {
+  const uploadImage = async (userId, image) => {
     try {
       const formData = new FormData();
+      formData.append('userId', userId);
       formData.append('image', image);
 
       console.log(formData.get('image'));
+      console.log(formData.get('userId'));
 
-      const result = await sendRequest(
-        'http://localhost:8080/api/users/image',
-        'POST',
-        { 'Content-Type': 'multipart/form-data' },
-        formData
-      );
+      fetch('http://localhost:8080/api/users/upload/image', {
+        method: 'POST',
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setResult(data);
+        });
 
       return result;
     } catch (err) {
-      console.log(imageUploadError);
+      console.log(err);
     }
   };
 
   return {
     uploadImage,
-    isImageUploadPending,
-    isImageUploadSuccess,
-    imageUploadError,
   };
 };

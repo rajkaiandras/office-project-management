@@ -1,20 +1,17 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useContext } from 'react';
 
+import { AuthContext } from '../../../contexts/auth-context';
 import { ImageUploadRequest } from '../../../services/ImageUploadRequest';
 
 export const ImageUpload = () => {
+  const auth = useContext(AuthContext);
   const filePickerRef = useRef();
 
   const [file, setFile] = useState();
   const [previewUrl, setPreviewUrl] = useState();
   const [isValid, setIsValid] = useState(true);
 
-  // const {
-  //   uploadImage,
-  //   isImageUploadPending,
-  //   isImageUploadSuccess,
-  //   imageUploadError,
-  // } = ImageUploadRequest();
+  const { uploadImage } = ImageUploadRequest();
 
   useEffect(() => {
     if (!file) {
@@ -27,19 +24,8 @@ export const ImageUpload = () => {
     };
     fileReader.readAsDataURL(file);
 
-    // uploadImage(file);
-
-    const formData = new FormData();
-    formData.append('image', file);
-
-    fetch('http://localhost:8080/api/users/image', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
+    let userId = auth.state.user._id;
+    uploadImage(userId, file);
 
     console.log(file);
   }, [file]);
@@ -61,7 +47,7 @@ export const ImageUpload = () => {
   };
 
   return (
-    <div className="my-4">
+    <form className="my-4" encType="multipart/form-data">
       <input
         id={'image'}
         ref={filePickerRef}
@@ -92,6 +78,6 @@ export const ImageUpload = () => {
           Invalid image upload (1 .jpg, .jpeg or .png image)!
         </p>
       )}
-    </div>
+    </form>
   );
 };

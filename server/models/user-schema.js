@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   password: { type: String, required: true },
+  image: { type: String, required: false },
   createdAt: {
     type: Date,
     default: Date.now(),

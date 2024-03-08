@@ -1,7 +1,7 @@
 import { PropTypes } from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-export const Avatar = ({ user }) => {
+export const Avatar = ({ userLastName, userImage }) => {
   return (
     <NavLink
       to="/profile"
@@ -11,11 +11,17 @@ export const Avatar = ({ user }) => {
           : 'px-4 border border-green-500 rounded-sm'
       }
     >
-      {user}
+      <img
+        className="w-4 h-4"
+        src={`http://localhost:5173/${userImage}`}
+        alt="User Image"
+      />
+      {userLastName}
     </NavLink>
   );
 };
 
 Avatar.propTypes = {
-  user: PropTypes.string,
+  userLastName: PropTypes.string,
+  userImage: PropTypes.string,
 };

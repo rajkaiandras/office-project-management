@@ -20,7 +20,12 @@ export const MainHeader = () => {
       <section className="flex gap-4">
         <MainNavigation />
 
-        {auth.state.user && <Avatar user={auth.state.user.lastName} />}
+        {auth.state.user && (
+          <Avatar
+            userLastName={auth.state.user.lastName}
+            userImage={auth.state.user.image}
+          />
+        )}
 
         <DarkModeSwitch />
       </section>

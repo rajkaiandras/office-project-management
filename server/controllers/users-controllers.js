@@ -49,12 +49,26 @@ const gettingUserByIdController = async (req, res, next) => {
 };
 
 const uploadingUserImageController = async (req, res, next) => {
-  console.log('GET request in /api/users/image - upload user image route!');
+  console.log(
+    'GET request in /api/users/upload/image - upload user image route!'
+  );
+
+  const userId = req.body.userId;
+  const userImage = req.file;
+
+  console.log(userId, userImage.path);
 
   try {
-    res.json({ message: `You saved an image!` });
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId },
+      {
+        image: userImage.path,
+      }
+    );
+
+    res.json({ message: 'You successfully uploaded a user image!' });
   } catch (err) {
-    const error = new HttpError('Could not save provided image!', 404);
+    const error = new HttpError('Could not save provided user image!', 404);
     return next(error);
   }
 };

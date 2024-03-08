@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -31,7 +32,7 @@ process.env.STATUS === 'production'
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
-// static folder
+// static files serving
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 
 // handling CORS error (set headers for every response to allow CORS)
@@ -58,6 +59,12 @@ app.use((req, res, next) => {
 
 // error handling
 app.use((error, req, res, next) => {
+  // image upload rollback
+  if (req.file) {
+    fs.unlink(req.file.path, (err) => {
+      console.log(err);
+    });
+  }
   res
     .status(error.errorCode || 500)
     .json({ message: error.message } || 'An unknown server error occurred!');
