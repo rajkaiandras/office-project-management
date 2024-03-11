@@ -11,7 +11,9 @@ export const Profile = () => {
       <ImageUpload center id="image" onInput={inputHandler} />
 
       <ul>
-        <li className="ml-4">Upload profile image</li>
+        <li className="ml-4">
+          FIX: After pick image, update profile image in Avatar
+        </li>
         <li className="ml-4">Edit personal information</li>
         <li className="ml-4">
           Change password - old/new password (last 3 password)

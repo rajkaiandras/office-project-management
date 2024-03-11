@@ -14,14 +14,14 @@ export const AuthLogIn = () => {
 
   const logIn = async (inputValues) => {
     try {
-      const result = await sendRequest(
+      const responseData = await sendRequest(
         'http://localhost:8080/api/auth/login',
         'POST',
         { 'Content-Type': 'application/json' },
         JSON.stringify(inputValues)
       );
 
-      auth.dispatch({ type: 'LOG_IN', payload: result.user });
+      auth.dispatch({ type: 'LOG_IN', payload: responseData.user });
     } catch (err) {
       console.log(logInError);
     }

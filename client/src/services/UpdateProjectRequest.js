@@ -1,6 +1,9 @@
+import { useContext } from 'react';
 import { useHttpClient } from '../hooks/useHttpClient';
+import { AuthContext } from '../contexts/auth-context.jsx';
 
 export const UpdateProjectRequest = () => {
+  const auth = useContext(AuthContext);
   const {
     sendRequest,
     isSuccess: isUpdateProjectRequestSuccess,
@@ -13,7 +16,10 @@ export const UpdateProjectRequest = () => {
       const result = await sendRequest(
         `http://localhost:8080/api/projects/${projectId}`,
         'PATCH',
-        { 'Content-Type': 'application/json' },
+        {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + auth.state.user.token,
+        },
         JSON.stringify({ issues })
       );
 

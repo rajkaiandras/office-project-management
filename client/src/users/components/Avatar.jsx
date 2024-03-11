@@ -1,22 +1,22 @@
 import { PropTypes } from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-export const Avatar = ({ userLastName, userImage }) => {
+export const Avatar = ({ userLastName, userImage, withName }) => {
   return (
     <NavLink
       to="/profile"
       className={({ isActive }) =>
         isActive
-          ? 'px-4 border border-green-500 rounded-sm text-blue-500'
-          : 'px-4 border border-green-500 rounded-sm'
+          ? 'flex items-center gap-2 px-4 text-blue-500'
+          : 'flex justify-center items-center gap-2 px-4'
       }
     >
       <img
-        className="w-4 h-4"
-        src={`http://localhost:5173/${userImage}`}
+        className="w-8 h-8 rounded-full"
+        src={`http://localhost:8080/${userImage}`}
         alt="User Image"
       />
-      {userLastName}
+      {withName && userLastName}
     </NavLink>
   );
 };
@@ -24,4 +24,5 @@ export const Avatar = ({ userLastName, userImage }) => {
 Avatar.propTypes = {
   userLastName: PropTypes.string,
   userImage: PropTypes.string,
+  withName: PropTypes.bool,
 };

@@ -14,14 +14,14 @@ export const AuthSignUp = () => {
 
   const signUp = async (inputValues) => {
     try {
-      const result = await sendRequest(
+      const responseData = await sendRequest(
         'http://localhost:8080/api/auth/signup',
         'POST',
         { 'Content-Type': 'application/json' },
         JSON.stringify(inputValues)
       );
 
-      auth.dispatch({ type: 'SIGN_UP', payload: result.user });
+      auth.dispatch({ type: 'SIGN_UP', payload: responseData.user });
     } catch (err) {
       console.log(signUpError);
     }

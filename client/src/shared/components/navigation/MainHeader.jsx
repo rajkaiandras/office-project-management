@@ -17,13 +17,14 @@ export const MainHeader = () => {
 
       {auth.state.user && <SearchBar />}
 
-      <section className="flex gap-4">
+      <section className="flex items-center gap-4">
         <MainNavigation />
 
         {auth.state.user && (
           <Avatar
             userLastName={auth.state.user.lastName}
             userImage={auth.state.user.image}
+            withName={true}
           />
         )}
 
